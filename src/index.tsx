@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { sayHello } from './utils/index.ts';
+import { sayHello } from './utils/index';
 
 const App = () => {
   const name = 'name';

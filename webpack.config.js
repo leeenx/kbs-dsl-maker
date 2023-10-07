@@ -2,52 +2,116 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
-const { webpack, Compilation } = require('webpack');
 
-class KbsDslParserPlugin {
-  apply(compiler) {
-    // compiler.hooks.entryOption.tap('MyPlugin', (context, entry) => {
-    //   console.log('++++++++++++++++', entry.index.import);
-    // });
-    compiler.hooks.thisCompilation.tap('KbsDslParserPlugin', (compilation) => {
-      // compilation.hooks.finishModules.tap(
-      //   'KbsDslParserPlugin',
-      //   (modules) => {
-      //     console.log('-------------');
-      //     // console.log({ modules, records });
-      //     // console.log('======chunks',chunks);
-      //     // module.resource ? console.log('module.resource:', module.resource) : console.log('module: ', module);
-      //   }
-      // );
-      compilation.hooks.processAssets.tap(
-        {
-          name: 'MyPlugin',
-          stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL, // see below for more stages
-        },
-        (assets) => {
-          console.log('List of assets and their sizes:');
-          Object.entries(assets).forEach(([pathname, source]) => {
-            // console.log('++++++++source:', source);
-            console.log(`— ${pathname}: ${source.size()} bytes`);
-          });
-        }
-      );
-    });
-    compiler.hooks.afterCompile.tap('KbsDslParserPlugin', (compilation) => {
-      const name = `index.${compilation.hash}`;
-      const asset = compilation.assets[`${name}.js`];
-      if (asset) {
-        // 找到资源
-        const realAsset = asset._children ? asset._children[1] : asset;
-        const code = realAsset._cachedSource || realAsset._originalSourceAsString;
-        const ast = require("@babel/parser").parse(code);
-        const dsl = require('./dsl-parser').parser(ast);
-        const rowSource = new compiler.webpack.sources.RawSource(JSON.stringify(dsl));
-        compilation.emitAsset(`index.${compilation.hash}.dsl.json`, rowSource);
-      }
-    });
-  }
-}
+// 保留函数名
+const ignoreFNames = [
+  '_applyDecoratedDescriptor',
+  '_applyDecs',
+  '_applyDecs2203',
+  '_applyDecs2203R',
+  '_applyDecs2301',
+  '_applyDecs2305',
+  '_arrayLikeToArray',
+  '_arrayWithHoles',
+  '_arrayWithoutHoles',
+  '_assertThisInitialized',
+  '_AsyncGenerator',
+  '_asyncGeneratorDelegate',
+  '_asyncIterator',
+  '_asyncToGenerator',
+  '_awaitAsyncGenerator',
+  '_AwaitValue',
+  '_checkInRHS',
+  '_checkPrivateRedeclaration',
+  '_classApplyDescriptorDestructureSet',
+  '_classApplyDescriptorGet',
+  '_classApplyDescriptorSet',
+  '_classCallCheck',
+  '_classCheckPrivateStaticAccess',
+  '_classCheckPrivateStaticFieldDescriptor',
+  '_classExtractFieldDescriptor',
+  '_classNameTDZError',
+  '_classPrivateFieldDestructureSet',
+  '_classPrivateFieldGet',
+  '_classPrivateFieldInitSpec',
+  '_classPrivateFieldLooseBase',
+  '_classPrivateFieldLooseKey',
+  '_classPrivateFieldSet',
+  '_classPrivateMethodGet',
+  '_classPrivateMethodInitSpec',
+  '_classPrivateMethodSet',
+  '_classStaticPrivateFieldDestructureSet',
+  '_classStaticPrivateFieldSpecGet',
+  '_classStaticPrivateFieldSpecSet',
+  '_classStaticPrivateMethodGet',
+  '_classStaticPrivateMethodSet',
+  '_construct',
+  '_createClass',
+  '_createForOfIteratorHelper',
+  '_createForOfIteratorHelperLoose',
+  '_createSuper',
+  '_decorate',
+  '_defaults',
+  '_defineAccessor',
+  '_defineEnumerableProperties',
+  '_defineProperty',
+  '_dispose',
+  '_extends',
+  '_get',
+  '_getPrototypeOf',
+  '_identity',
+  '_inherits',
+  '_inheritsLoose',
+  '_initializerDefineProperty',
+  '_initializerWarningHelper',
+  '_instanceof',
+  '_interopRequireDefault',
+  '_interopRequireWildcard',
+  '_isNativeFunction',
+  '_isNativeReflectConstruct',
+  '_iterableToArray',
+  '_iterableToArrayLimit',
+  '_iterableToArrayLimitLoose',
+  '_jsx',
+  '_maybeArrayLike',
+  '_newArrowCheck',
+  '_nonIterableRest',
+  '_nonIterableSpread',
+  '_objectDestructuringEmpty',
+  '_objectSpread',
+  '_objectSpread2',
+  '_objectWithoutProperties',
+  '_objectWithoutPropertiesLoose',
+  '_OverloadYield',
+  '_possibleConstructorReturn',
+  '_readOnlyError',
+  '_regeneratorRuntime',
+  '_set',
+  '_setPrototypeOf',
+  '_skipFirstGeneratorNext',
+  '_slicedToArray',
+  '_slicedToArrayLoose',
+  '_superPropBase',
+  '_taggedTemplateLiteral',
+  '_taggedTemplateLiteralLoose',
+  '_tdz',
+  '_temporalRef',
+  '_temporalUndefined',
+  '_toArray',
+  '_toConsumableArray',
+  '_toPrimitive',
+  '_toPropertyKey',
+  '_typeof',
+  '_unsupportedIterableToArray',
+  '_using',
+  '_wrapAsyncGenerator',
+  '_wrapNativeSuper',
+  '_wrapRegExp',
+  '_writeOnlyError',
+];
+
+const KbsDslParserPlugin = require('kbs-dsl-parser');
+
 
 module.exports = {
   mode: 'production', // development | production | none
@@ -64,12 +128,15 @@ module.exports = {
     }
   },
   optimization: {
-    minimize: false,
+    minimize: process.env.COMPRESS === 'yes',
     minimizer: [new TerserPlugin({
       terserOptions: {
-        keep_fnames: /_defineProperty/
+        keep_fnames: new RegExp(ignoreFNames.join('|'))
       }
     })]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.wasm'],
   },
   module: {
     rules: [
@@ -109,13 +176,24 @@ module.exports = {
     ],
   },
   externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      root: 'React'
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      root: 'ReactDOM'
+    }
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html', scriptLoading: 'blocking' }),
-    new KbsDslParserPlugin()
+    new KbsDslParserPlugin({
+      compress: process.env.COMPRESS === 'yes',
+      ignoreFNames
+    })
   ],
   performance: {
     maxAssetSize: 20000000, // 整数类型（以字节为单位）
