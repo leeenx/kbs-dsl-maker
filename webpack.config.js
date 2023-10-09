@@ -1,4 +1,5 @@
 const path = require('path');
+const fs =require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
@@ -112,15 +113,62 @@ const ignoreFNames = [
 
 const KbsDslParserPlugin = require('kbs-dsl-parser');
 
+// 默认插件列表，不包含 mpa
+const plugins = [
+  new CleanWebpackPlugin(),
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    scriptLoading: 'blocking',
+    chunks: ['index']
+  })
+];
+
+/**
+ * MPA 配置
+ * ./src/pages 为 MPA 目录 
+ */
+const mpaDir = path.resolve(__dirname, './src/pages');
+const mapEntries = {};
+if (fs.existsSync(mpaDir)) {
+  const dirs = fs.readdirSync(mpaDir);
+  dirs.forEach(item => {
+    const itemPath = path.resolve(mpaDir, item);
+    if (fs.statSync(itemPath).isDirectory()) {
+      // 只取目录
+      mapEntries[item] = `./src/pages/${item}`;
+      // plugins 加入 mpa 的 html 模板
+      plugins.push(
+        new HtmlWebpackPlugin({
+          template: './src/index.html',
+          scriptLoading: 'blocking',
+          filename: `${item}/index.html`,
+          chunks: [item]
+        })
+      );
+    }
+  });
+}
+
+// plugins 追加 dsl 格式化插件
+plugins.push(
+  new KbsDslParserPlugin({
+    compress: process.env.COMPRESS === 'yes',
+    ignoreFNames,
+    watch: process.env.COMPRESS !== 'yes'
+  })
+);
 
 module.exports = {
   mode: 'production', // development | production | none
-  entry: {
-    index: './src/index.tsx'
-  },
+  entry: Object.assign(
+    {
+      index: './src/index.tsx'
+    },
+    mapEntries
+  ),
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js', // 使用 chunkhash 是为了优化 mpa
     libraryTarget: 'umd',
     library: 'app',
     environment: {
@@ -187,14 +235,7 @@ module.exports = {
       root: 'ReactDOM'
     }
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ template: './src/index.html', scriptLoading: 'blocking' }),
-    new KbsDslParserPlugin({
-      compress: process.env.COMPRESS === 'yes',
-      ignoreFNames
-    })
-  ],
+  plugins,
   performance: {
     maxAssetSize: 20000000, // 整数类型（以字节为单位）
 	  maxEntrypointSize: 400000, // 整数类型（以字节为单位）

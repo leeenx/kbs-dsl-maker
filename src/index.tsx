@@ -6,13 +6,22 @@ const App = () => {
   const obj = {
     [`a-${name}`]: 'name'
   };
+  const handleClick = () => {
+    console.log('你点了我');
+  };
   useEffect(() => {
     sayHello();
     sayHello();
   }, []);
   useCallback(() => {}, []);
   return (
-    <div className="xx-xx">{obj[`a-${name}`]}ww</div>
+    <>
+      <view>object: {obj[`a-${name}`]}ww@+@</view>
+      <view>第二行</view>
+      <view>第三行</view>
+      <view style={{ backgroundColor: 'green' }}>第4行</view>
+      <button onClick={handleClick}>授权</button>
+    </>
   );
 };
 
