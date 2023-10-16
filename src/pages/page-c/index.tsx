@@ -1,8 +1,10 @@
-import React, { memo, useEffect } from "react";
+import { useMemoizedFn } from "ahooks";
+import React, { memo } from "react";
 
 export default memo(() => {
-  useEffect(() => {
-    wx.setNavigationBarTitle({ title: 'page-c' });
-  }, []);
-  return (<view>page-c</view>);
+  const handleClick = useMemoizedFn(() => {
+    // @ts-ignore
+    navigate('page-b', { pageTitle: '页面B' });
+  });
+  return (<view onClick={handleClick}>page-c</view>);
 });
