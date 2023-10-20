@@ -233,6 +233,11 @@ module.exports = {
       commonjs: 'react-dom',
       commonjs2: 'react-dom',
       root: 'ReactDOM'
+    },
+    lodash: {
+      commonjs: 'lodash',
+      commonjs2: 'lodash',
+      root: '_'
     }
   },
   plugins,
