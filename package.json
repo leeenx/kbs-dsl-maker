@@ -4,9 +4,9 @@
   "description": "kbs-dsl 的生成器",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env COMPRESS=no webpack serve",
-    "build": "cross-env COMPRESS=yes webpack",
-    "build:dev": "cross-env COMPRESS=no webpack"
+    "start": "cross-env COMPRESS=no DEV=yes webpack serve",
+    "build": "cross-env COMPRESS=yes DEV=no webpack",
+    "build:dev": "cross-env COMPRESS=no DEV=yes webpack"
   },
   "repository": {
     "type": "git",

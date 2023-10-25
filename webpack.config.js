@@ -111,6 +111,13 @@ const ignoreFNames = [
   '_writeOnlyError',
 ];
 
+const isDev = process.env.DEV === 'yes';
+// host 与 port
+const PROTOCOL = isDev ? 'http:' : 'https';
+const HOST = isDev ? '127.0.0.1' : 'leeenx.github.io';
+const PORT = isDev ? 9000 : undefined;
+const PATH = isDev ? '' : 'kbs-dsl-maker/dist/'
+
 const KbsDslParserPlugin = require('kbs-dsl-parser');
 
 // 默认插件列表，不包含 mpa
@@ -173,7 +180,8 @@ module.exports = {
     library: 'app',
     environment: {
       arrowFunction: false
-    }
+    },
+    publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}`
   },
   optimization: {
     minimize: process.env.COMPRESS === 'yes',
@@ -249,6 +257,6 @@ module.exports = {
     compress: true,
     hot: false,
     client: false,
-    port: 9000,
+    port: PORT,
   }
 }
