@@ -13,9 +13,9 @@ export default memo(() => {
   const handleGetUserInfo = useMemoizedFn((e) => {
     console.log('=======>>>> handleGetUserInfo', e);
   });
-  const handleChooseAvatar = useMemoizedFn((e) => {
+  const handleChooseAvatar = (e) => {
     console.log('=====头像信息是：', e);
-  });
+  };
   useShow(() => {
     console.log('page-a显示');
   });

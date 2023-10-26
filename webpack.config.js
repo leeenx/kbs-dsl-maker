@@ -118,6 +118,11 @@ const HOST = isDev ? '127.0.0.1' : 'leeenx.github.io';
 const PORT = isDev ? 9000 : undefined;
 const PATH = isDev ? '' : 'kbs-dsl-maker/dist/'
 
+// const PROTOCOL = 'http:';
+// const HOST = '127.0.0.1';
+// const PORT = 9000;
+// const PATH = '';
+
 const KbsDslParserPlugin = require('kbs-dsl-parser');
 
 // 默认插件列表，不包含 mpa

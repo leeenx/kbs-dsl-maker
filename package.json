@@ -4,7 +4,7 @@
   "description": "kbs-dsl 的生成器",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env COMPRESS=no DEV=yes webpack serve",
+    "start": "cross-env COMPRESS=yes DEV=yes webpack serve",
     "build": "cross-env COMPRESS=yes DEV=no webpack",
     "build:dev": "cross-env COMPRESS=no DEV=yes webpack"
   },
@@ -32,13 +32,13 @@
     "core-js": "^3.32.2",
     "cross-env": "^7.0.3",
     "html-webpack-plugin": "^5.5.3",
-    "kbs-dsl-parser": "^1.0.12",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "ahooks": "^3.7.8"
+    "ahooks": "^3.7.8",
+    "kbs-dsl-parser": "^1.0.13"
   }
 }
