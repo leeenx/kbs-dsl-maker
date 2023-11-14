@@ -1,13 +1,18 @@
 import { useMemoizedFn } from "ahooks";
 import React, { memo, useEffect } from "react";
-import { useShow, useHide, useShareAppMessage } from '../../utils';
+import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
+import { Button } from "../../base-components";
 
 export default memo(() => {
   const handleClick = useMemoizedFn((e) => {
     navigate('/page-c/', { pageTitle: '页面C' });
   });
   const handleBack = useMemoizedFn(() => {
-    wx?.navigateBack();
+    if (currentEnv === 'wechat-miniprogram') {
+      wx.navigateBack();
+    } else {
+      history.back();
+    }
   });
   const handleGetUserInfo = useMemoizedFn((e) => {
     console.log('=======>>>> handleGetUserInfo', e);
@@ -60,22 +65,22 @@ export default memo(() => {
       <div style={{ fontSize: 14, color: '#999', margin: 12 }}>
         自定义头部的页面
       </div>
-      <wx-button onClick={handleClick} style={{ marginTop: 12 }}>
+      <Button onClick={handleClick} style={{ marginTop: 12 }}>
         前往「page-c」
-      </wx-button>
-      <wx-button onClick={handleBack} style={{ marginTop: 12 }}>返回上一页</wx-button>
-      <wx-button
+      </Button>
+      <Button onClick={handleBack} style={{ marginTop: 12 }}>返回上一页</Button>
+      <Button
         onGetUserInfo={handleGetUserInfo}
         open-type="getUserInfo"
         type="primary"
         style={{ marginTop: 12 }}
-      >获取用户信息</wx-button>
-      <wx-button
+      >获取用户信息</Button>
+      <Button
         open-type="chooseAvatar"
         type="primary"
         style={{ marginTop: 12 }}
         onChooseAvatar={handleChooseAvatar}
-      >获取用户头像</wx-button>
+      >获取用户头像</Button>
     </div>
   );
 });

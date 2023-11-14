@@ -10,6 +10,46 @@
         padding: 0;
         margin: 0;
       }
+      button {
+        -webkit-tap-highlight-color: transparent;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #000;
+        cursor: pointer;
+        display: block;
+        font-size: 18px;
+        line-height: 2.55555556;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        padding-left: 14px;
+        padding-right: 14px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+      }
+      button {
+        border-radius: 4px;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.41176471;
+        padding: 8px 24px;
+        border: 0 none;
+      }
+      button[type=primary] {
+        background-color: #07c160;
+        color: #fff;
+      }
+      button:not([size=mini]) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 184px;
+      }
+      button[type=warn] {
+        background-color: #f2f2f2;
+        color: #fa5151;
+      }
     </style>
     <script>
       var navigate = (page) => {

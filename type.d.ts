@@ -152,4 +152,4 @@ declare namespace JSX {
 }
 
 declare const nameSpace: number;
-declare const env: 'wechat-miniprogarm' | 'web';
+declare const env: 'wechat-miniprogram' | 'web';

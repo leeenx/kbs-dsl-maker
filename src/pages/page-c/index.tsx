@@ -1,13 +1,18 @@
 import { useMemoizedFn } from "ahooks";
 import React, { memo } from "react";
-import { useShow, useHide, useShareAppMessage } from '../../utils';
+import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
+import { Button } from "../../base-components";
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
     navigate?.('/page-b/', { pageTitle: '页面B' });
   });
   const handleBack = useMemoizedFn(() => {
-    wx?.navigateBack();
+    if (currentEnv === 'wechat-miniprogram') {
+      wx?.navigateBack();
+    } else {
+      history.back();
+    }
   });
   useShow(() => {
     console.log('page-c显示');
@@ -39,8 +44,7 @@ export default memo(() => {
           margin: 12
         }}
       />
-      <div onClick={handleBack}>返回</div>
-      <div onClick={handleClick}>page-c</div>
+      <Button onClick={handleBack}>返回</Button>
     </div>
   );
 });

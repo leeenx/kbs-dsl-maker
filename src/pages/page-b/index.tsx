@@ -1,13 +1,18 @@
 import React, { memo, useEffect } from "react";
 import { useMemoizedFn } from "ahooks";
-import { useShow, useHide, useShareAppMessage } from '../../utils';
+import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
+import { Button } from "../../base-components";
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
     navigate('/page-a/', { pageTitle: '页面A' }, { headless: true });
   });
   const handleBack = useMemoizedFn(() => {
-    wx?.navigateBack();
+    if (currentEnv === 'wechat-miniprogram') {
+      wx.navigateBack();
+    } else {
+      history.back();
+    }
   });
   
   useShow(() => {
@@ -24,7 +29,9 @@ export default memo(() => {
   });
 
   useEffect(() => {
-    wx?.setNavigationBarTitle({ title: 'page-b' });
+    if (currentEnv === 'wechat-miniprogram') {
+      wx?.setNavigationBarTitle({ title: 'page-b' });
+    }
   }, []);
 
   return (
@@ -48,15 +55,15 @@ export default memo(() => {
     <div style={{ fontSize: 14, color: '#999', margin: 12 }}>
       带头部的页面窗口
     </div>
-    <wx-button onClick={handleClick}>
+    <Button onClick={handleClick}>
       前往「page-a」
-    </wx-button>
-    <wx-button onClick={handleBack} style={{ margin: 12 }}>返回上一页</wx-button>
-    <wx-button
+    </Button>
+    <Button onClick={handleBack} style={{ margin: 12 }}>返回上一页</Button>
+    <Button
       open-type="share"
       type="primary"
       style={{fontWeight: 400, fontSize: 14}}
-    >分享</wx-button>
+    >分享</Button>
   </div>
   );
 });

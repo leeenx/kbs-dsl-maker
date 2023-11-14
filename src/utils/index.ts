@@ -1,3 +1,9 @@
+export const getEnv = () => {
+  return typeof env ? env : 'web';
+};
+
+export const currentEnv = getEnv();
+
 // 小程序的 hooks
 const EMPTY_HOOK = () => {};
 export const {
@@ -23,4 +29,4 @@ export const {
   useResize = EMPTY_HOOK,
   useTabItemTap = EMPTY_HOOK,
   useSaveExitState = EMPTY_HOOK
-} = env === 'wechat-miniprogarm' ? kbsHooks : {};
+} = currentEnv === 'wechat-miniprogram' ? kbsHooks : {};
