@@ -1,22 +1,21 @@
 import { useMemoizedFn } from "ahooks";
 import React, { memo } from "react";
-
-const { useShow, useHide, useShareAppMessage } = kbsHooks || {};
+import { useShow, useHide, useShareAppMessage } from '../../utils';
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
-    navigate?.('page-b/', { pageTitle: '页面B' });
+    navigate?.('/page-b/', { pageTitle: '页面B' });
   });
   const handleBack = useMemoizedFn(() => {
     wx?.navigateBack();
   });
-  useShow?.(() => {
+  useShow(() => {
     console.log('page-c显示');
   });
-  useHide?.(() => {
+  useHide(() => {
     console.log('page-c隐藏');
   });
-  useShareAppMessage?.(({ from }) => {
+  useShareAppMessage(({ from }) => {
     console.log('----from:', from);
     return {
       title: '分享的页面是 PAGE-c'

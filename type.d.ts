@@ -90,6 +90,13 @@ type UseTabItemTapCallback = (res: {
 type UseSaveExitStateCallback = () => void;
 
 declare namespace kbsHooks {
+  function useLaunch(callback: UseLaunchCallback): void;
+  function useError(callback: UseErrorCallback): void;
+  function usePageNotFound(callback: UsePageNotFoundCallback): void;
+  function useUnhandledRejection(callback: UseUnhandledRejectionCallback): void;
+  function useAppShow(callback: UseAppShowCallback): void;
+  function useAppHide(callback: UseAppHideCallback): void;
+  function useThemeChange(callback: UseThemeChangeCallback): void;
   function useLoad(callback?: UseLoadCallback): void;
   function useShow(callback?: UseShowCallback): void;
   function useReady(callback?: UseReadyCallback): void;
@@ -145,3 +152,4 @@ declare namespace JSX {
 }
 
 declare const nameSpace: number;
+declare const env: 'wechat-miniprogarm' | 'web';

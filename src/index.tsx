@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { sayHello } from './utils/index';
+import React, { useCallback } from 'react';
 
 const App = () => {
   const name = 'name';
@@ -9,10 +8,7 @@ const App = () => {
   const handleClick = () => {
     console.log('你点了我');
   };
-  useEffect(() => {
-    sayHello();
-    sayHello();
-  }, []);
+
   useCallback(() => {}, []);
   return (
     <>
