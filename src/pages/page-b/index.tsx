@@ -5,19 +5,19 @@ const { useShow, useHide, useShareAppMessage } = kbsHooks;
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
-    navigate('page-a', { pageTitle: '页面A' }, { headless: true });
+    navigate('page-a/', { pageTitle: '页面A' }, { headless: true });
   });
   const handleBack = useMemoizedFn(() => {
-    wx.navigateBack();
+    wx?.navigateBack();
   });
   
-  useShow(() => {
+  useShow?.(() => {
     console.log('page-b显示');
   });
-  useHide(() => {
+  useHide?.(() => {
     console.log('page-b隐藏');
   });
-  useShareAppMessage(({ from }) => {
+  useShareAppMessage?.(({ from }) => {
     console.log('----from:', from);
     return {
       title: '分享的页面是 PAGE-B'
@@ -25,7 +25,7 @@ export default memo(() => {
   });
 
   useEffect(() => {
-    wx.setNavigationBarTitle({ title: 'page-b' });
+    wx?.setNavigationBarTitle({ title: 'page-b' });
   }, []);
 
   return (

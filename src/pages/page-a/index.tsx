@@ -5,10 +5,10 @@ const { useShow, useHide, useShareAppMessage } = kbsHooks;
 
 export default memo(() => {
   const handleClick = useMemoizedFn((e) => {
-    navigate('page-c', { pageTitle: '页面C' });
+    navigate('page-c/', { pageTitle: '页面C' });
   });
   const handleBack = useMemoizedFn(() => {
-    wx.navigateBack();
+    wx?.navigateBack();
   });
   const handleGetUserInfo = useMemoizedFn((e) => {
     console.log('=======>>>> handleGetUserInfo', e);
@@ -16,20 +16,20 @@ export default memo(() => {
   const handleChooseAvatar = (e) => {
     console.log('=====头像信息是：', e);
   };
-  useShow(() => {
+  useShow?.(() => {
     console.log('page-a显示');
   });
-  useHide(() => {
+  useHide?.(() => {
     console.log('page-a隐藏');
   });
-  useShareAppMessage(({ from }) => {
+  useShareAppMessage?.(({ from }) => {
     console.log('----from:', from);
     return {
       title: '分享的页面是 PAGE-A'
     }
   });
   useEffect(() => {
-    wx.setNavigationBarColor({ frontColor: '#ffffff', backgroundColor: '#ffffff' });
+    wx?.setNavigationBarColor({ frontColor: '#ffffff', backgroundColor: '#ffffff' });
   }, []);
   return (
     <div style={{

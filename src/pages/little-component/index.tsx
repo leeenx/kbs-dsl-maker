@@ -3,7 +3,7 @@ import React, { memo } from "react";
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
-    wx.showToast({ title: '看到提示了吗？', icon: 'none', duration: 4000 })
+    wx?.showToast({ title: '看到提示了吗？', icon: 'none', duration: 4000 })
   });
   return (
     <div
