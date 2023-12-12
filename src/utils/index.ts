@@ -1,5 +1,5 @@
 export const getEnv = () => {
-  return typeof env ? env : 'web';
+  return typeof runingEnv !== 'undefined' ? runingEnv : 'web';
 };
 
 export const currentEnv = getEnv();
@@ -29,4 +29,4 @@ export const {
   useResize = EMPTY_HOOK,
   useTabItemTap = EMPTY_HOOK,
   useSaveExitState = EMPTY_HOOK
-} = currentEnv === 'wechat-miniprogram' ? kbsHooks : {};
+} = currentEnv === 'wx_mp' ? kbsHooks : {};

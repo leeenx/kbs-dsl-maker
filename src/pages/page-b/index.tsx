@@ -3,12 +3,23 @@ import { useMemoizedFn } from "ahooks";
 import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
 import { Button } from "../../base-components";
 
+var s = 1;
+function foo() {
+  console.log('heac', { s });
+  if (true) for(var s = 0; s < 10; ++s) {
+    // var s = a > 2 ? a : 100;
+  }
+  console.log('s', s);
+}
+foo();
+console.log('=====s', s);
+
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
     navigate('/page-a/', { pageTitle: '页面A' }, { headless: true });
   });
   const handleBack = useMemoizedFn(() => {
-    if (currentEnv === 'wechat-miniprogram') {
+    if (currentEnv === 'wx_mp') {
       wx.navigateBack();
     } else {
       history.back();
@@ -29,7 +40,7 @@ export default memo(() => {
   });
 
   useEffect(() => {
-    if (currentEnv === 'wechat-miniprogram') {
+    if (currentEnv === 'wx_mp') {
       wx?.setNavigationBarTitle({ title: 'page-b' });
     }
   }, []);

@@ -8,7 +8,7 @@ export default memo(() => {
     navigate('/page-c/', { pageTitle: '页面C' });
   });
   const handleBack = useMemoizedFn(() => {
-    if (currentEnv === 'wechat-miniprogram') {
+    if (currentEnv === 'wx_mp') {
       wx.navigateBack();
     } else {
       history.back();

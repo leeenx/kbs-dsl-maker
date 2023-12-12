@@ -114,7 +114,7 @@ const ignoreFNames = [
 const isDev = process.env.DEV === 'yes';
 // host 与 port
 const PROTOCOL = isDev ? 'http:' : 'https:';
-const HOST = isDev ? '127.0.0.1' : 'a.comtemarsh.com';
+const HOST = isDev ? 'www.dsl-maker.com' : 'a.comtemarsh.com';
 const PORT = isDev ? 9000 : undefined;
 const PATH = isDev ? '' : 'kbs-dsl-maker/'
 
