@@ -32,7 +32,7 @@
     "core-js": "^3.32.2",
     "cross-env": "^7.0.3",
     "html-webpack-plugin": "^5.5.3",
-    "kbs-dsl-parser": "^1.1.1",
+    "kbs-dsl-parser": "^1.1.2",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",

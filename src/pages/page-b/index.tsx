@@ -3,16 +3,13 @@ import { useMemoizedFn } from "ahooks";
 import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
 import { Button } from "../../base-components";
 
-var s = 1;
-function foo() {
-  console.log('heac', { s });
-  if (true) for(var s = 0; s < 10; ++s) {
-    // var s = a > 2 ? a : 100;
+var i = 0;
+do {
+  if (++i === 5) {
+    break;
   }
-  console.log('s', s);
-}
-foo();
-console.log('=====s', s);
+} while(i < 10);
+console.log(i);
 
 export default memo(() => {
   const handleClick = useMemoizedFn(() => {
