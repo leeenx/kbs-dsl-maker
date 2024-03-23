@@ -184,7 +184,8 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'app',
     environment: {
-      arrowFunction: false
+      arrowFunction: false,
+      const: false
     },
     publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}`
   },
