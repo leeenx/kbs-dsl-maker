@@ -139,9 +139,9 @@ const plugins = [
 
 /**
  * MPA 配置
- * ./src/pages 为 MPA 目录
+ * ./src/packages 为 MPA 目录
  */
-const mpaDir = path.resolve(__dirname, './src/pages');
+const mpaDir = path.resolve(__dirname, './src/packages');
 const mapEntries = {};
 if (fs.existsSync(mpaDir)) {
   const dirs = fs.readdirSync(mpaDir);
@@ -149,7 +149,7 @@ if (fs.existsSync(mpaDir)) {
     const itemPath = path.resolve(mpaDir, item);
     if (fs.statSync(itemPath).isDirectory()) {
       // 只取目录
-      mapEntries[item] = `./src/pages/${item}`;
+      mapEntries[item] = `./src/packages/${item}`;
       // plugins 加入 mpa 的 html 模板
       plugins.push(
         new HtmlWebpackPlugin({
@@ -191,7 +191,7 @@ module.exports = {
       arrowFunction: false,
       const: false
     },
-    publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}`
+    publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}/`
   },
   optimization: {
     minimize: process.env.COMPRESS === 'yes',
