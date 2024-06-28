@@ -179,7 +179,7 @@ module.exports = {
     mapEntries
   ),
   output: {
-    path: path.resolve(__dirname, './docs'),
+    path: path.resolve(__dirname, './dist'),
     filename: '[name].[chunkhash].js', // 使用 chunkhash 是为了优化 mpa
     libraryTarget: 'umd',
     library: 'app',
