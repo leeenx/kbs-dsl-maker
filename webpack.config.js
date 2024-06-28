@@ -114,9 +114,9 @@ const ignoreFNames = [
 const isDev = process.env.DEV === 'yes';
 // host 与 port
 const PROTOCOL = isDev ? 'http:' : 'https:';
-const HOST = isDev ? 'www.dsl-maker.com' : 'a.comtemarsh.com';
+const HOST = isDev ? '127.0.0.1' : 'www.leeenx.cn';
 const PORT = isDev ? 9000 : undefined;
-const PATH = isDev ? '' : 'kbs-dsl-maker/'
+const PATH = '';
 
 // const PROTOCOL = 'http:';
 // const HOST = '127.0.0.1';
@@ -137,7 +137,7 @@ const plugins = [
 
 /**
  * MPA 配置
- * ./src/pages 为 MPA 目录 
+ * ./src/pages 为 MPA 目录
  */
 const mpaDir = path.resolve(__dirname, './src/pages');
 const mapEntries = {};
@@ -179,7 +179,7 @@ module.exports = {
     mapEntries
   ),
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './docs'),
     filename: '[name].[chunkhash].js', // 使用 chunkhash 是为了优化 mpa
     libraryTarget: 'umd',
     library: 'app',
