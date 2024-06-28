@@ -116,7 +116,7 @@ const isDev = process.env.DEV === 'yes';
 const PROTOCOL = isDev ? 'http:' : 'https:';
 const HOST = isDev ? '127.0.0.1' : 'www.leeenx.cn';
 const PORT = isDev ? 9000 : undefined;
-const PATH = '/dist';
+const PATH = 'dist';
 
 // const PROTOCOL = 'http:';
 // const HOST = '127.0.0.1';
