@@ -132,7 +132,8 @@ const plugins = [
     template: './src/index.html',
     scriptLoading: 'blocking',
     chunks: ['index'],
-    isDev: isDev ? 'yes' : 'no'
+    isDev: isDev ? 'yes' : 'no',
+    inject: false
   })
 ];
 
@@ -156,7 +157,8 @@ if (fs.existsSync(mpaDir)) {
           scriptLoading: 'blocking',
           filename: `${item}/index.html`,
           chunks: [item],
-          isDev: isDev ? 'yes' : 'no'
+          isDev: isDev ? 'yes' : 'no',
+          inject: false
         })
       );
     }
