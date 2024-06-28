@@ -64,7 +64,7 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <% for (var index in htmlWebpackPlugin.files.js) { %>
-    <script type="text/javascript" src="<%=htmlWebpackPlugin.files.js[index] %>" mp-web-package-url="<%=htmlWebpackPlugin.files.js[index] %>"></script>
+    <script type="text/javascript" src="<%=htmlWebpackPlugin.files.js[index] %>" mp-web-package-url="<%=htmlWebpackPlugin.files.js[index].replace(/\.js$/, '.dsl.json') %>"></script>
     <% } %>
     <script>
       var App = app.default;
