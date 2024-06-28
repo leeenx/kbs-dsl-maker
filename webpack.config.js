@@ -116,7 +116,7 @@ const isDev = process.env.DEV === 'yes';
 const PROTOCOL = isDev ? 'http:' : 'https:';
 const HOST = isDev ? '127.0.0.1' : 'www.leeenx.cn';
 const PORT = isDev ? 9000 : undefined;
-const PATH = '';
+const PATH = '/dist';
 
 // const PROTOCOL = 'http:';
 // const HOST = '127.0.0.1';
@@ -131,7 +131,8 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: './src/index.html',
     scriptLoading: 'blocking',
-    chunks: ['index']
+    chunks: ['index'],
+    isDev: isDev ? 'yes' : 'no'
   })
 ];
 
@@ -154,7 +155,8 @@ if (fs.existsSync(mpaDir)) {
           template: './src/index.html',
           scriptLoading: 'blocking',
           filename: `${item}/index.html`,
-          chunks: [item]
+          chunks: [item],
+          isDev: isDev ? 'yes' : 'no'
         })
       );
     }
