@@ -3,7 +3,7 @@ import { useMemoizedFn } from "ahooks";
 import { useShow, useHide, useShareAppMessage, currentEnv } from '../../utils';
 import { Button } from "../../base-components";
 
-const arr = [];
+const arr = [1, 2, 4];
 
 function foo(value) {
   // const result = 0;
@@ -13,31 +13,23 @@ function foo(value) {
   // }
 }
 
-const obj = {};
+const obj = { $$a$$: 1 };
 
 const start = Date.now();
 let j = 0;
 for(var i = 0; i <= 1000000; ++i) {
-  // if (i >= 0) {
-    // const j = i;
-  // }
-  // const j = Date.now();
-  // Date.now();
-  // j;
-  // if (i >= 0) {
-    // const j = {};
-  // }
-  // if (i >= 0) {
-  //   const j = foo();
-  // }
-  // foo(i);
-  // const a = 'a';
-  // obj[a];
-  arr[1 + 1];
-  // foo(i);
-  // j;
-  // foo;
-  // arr[j++] = i;
+  // 1;
+  // obj;
+  obj.$$a$$;
+  // ['$$a$$++'];
+  // {$$a$$: 'is a' };
+  // arr[0];
+  // 1;
+  // 1;
+  // 1;
+  // 1;
+  // i;
+  // if (i === 1000000) break;
 }
 console.log('~~总耗时：', Date.now() - start, { i, j });
 
