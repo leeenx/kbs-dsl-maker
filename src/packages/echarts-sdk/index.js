@@ -22333,6 +22333,7 @@
 			coordSysMap: {}
 		};
 		return function(t, e, n) {
+      console.log('echartsZM');
 			var i = e.getComponent("tooltip"),
 				r = e.getComponent("axisPointer"),
 				o = r.get("link", !0) || [],
@@ -35781,6 +35782,7 @@
 	}
 
 	function uN(t) {
+    console.log('echartsuN');
 		tI.registerAxisPointerClass("CartesianAxisPointer", HR), t.registerComponentModel(ZR), t.registerComponentView(tN), t.registerPreprocessor((function(t) {
 			if (t) {
 				(!t.axisPointer || 0 === t.axisPointer.length) && (t.axisPointer = {});
@@ -35788,8 +35790,8 @@
 				e && !Y(e) && (t.axisPointer.link = [e])
 			}
 		})), t.registerProcessor(t.PRIORITY.PROCESSOR.STATISTIC, (function(t, e) {
-			t.getComponent("axisPointer")
-				.coordSysAxesInfo = ZM(t, e)
+      console.log('echarts-call-ZM', t.getComponent("axisPointer"));
+			t.getComponent("axisPointer").coordSysAxesInfo = ZM(t, e)
 		})), t.registerAction({
 			type: "updateAxisPointer",
 			event: "updateAxisPointer",
