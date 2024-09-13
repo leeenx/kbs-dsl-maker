@@ -52,10 +52,32 @@
       }
     </style>
     <script>
-      var navigate = (page) => {
-        location.href = page;
+      var navigate = (page, params) => {
+        let url = page;
+        if (params && typeof params === "object") {
+          let query = JSON.stringify(params);
+          if (url.indexOf('?') !== -1) {
+            url = `${page}&params=${query}`;
+          } else {
+            url = `${page}?params=${query}`;
+          }
+        }
+        location.href = url;
       };
-      var wx = null;
+      var getParams = () => {
+        const url = new URL(location.href);
+        const params = url.searchParams.get('params');
+        if (params) {
+          return JSON.parse(decodeURIComponent(params));
+        }
+        return {};
+      };
+      var getParam = (key) => {
+        const params = getParams();
+        return params[key];
+      };
+
+      var wx = {};
       var env = 'web';
     </script>
   </head>
@@ -67,7 +89,14 @@
     <script type="text/javascript" src="<%=htmlWebpackPlugin.files.js[index] %>" mp-web-package-url="<%=htmlWebpackPlugin.files.js[index].replace(/\.js$/, '.dsl.json') %>"></script>
     <% } %>
     <script>
-      var App = app.default;
+      let pageKey = getParam('page');
+      if (pageKey) {
+        pageKey = pageKey.replace(/[-_]+|^(.)?/g, (match, letter) => letter.toUpperCase());
+        pageKey = pageKey.replace(/^\w/, pageKey[0].toUpperCase());
+      } else {
+        pageKey = 'default';
+      }
+      const App = app[pageKey];
       ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
     </script>
     <% if(htmlWebpackPlugin.options.isDev === "yes"){ %>

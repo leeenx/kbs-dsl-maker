@@ -153,3 +153,4 @@ declare namespace JSX {
 
 declare const nameSpace: number;
 declare const runingEnv: 'wx_mp' | 'web';
+declare const getThisPointer: () => any;

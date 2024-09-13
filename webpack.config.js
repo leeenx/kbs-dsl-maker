@@ -207,7 +207,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        // test: /\.(ts|tsx)$/,
+        test: (filename) => {
+          if (/\.3rd\.js$/.test(filename)) {
+            // .3rd.js 表示不需要打包
+            return false;
+          }
+          return /\.(js|ts|jsx|tsx)$/.test(filename);
+        },
         use: {
           loader: "babel-loader",
           options: {

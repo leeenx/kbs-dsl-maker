@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.22.15",
+    "@types/lodash": "^4.17.7",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/wechat-miniprogram": "^3.4.4",
