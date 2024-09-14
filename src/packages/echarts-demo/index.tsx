@@ -131,7 +131,7 @@ export default memo(() => {
   ], []);
 
   const handleItemClick = useMemoizedFn((name: string) => {
-    navigate('/echarts-demo', { page: name });
+    navigate('/echarts-demo/', { page: name });
   });
 
   return (
