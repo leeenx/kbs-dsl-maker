@@ -113,8 +113,6 @@ const ignoreFNames = [
 
 const isDev = process.env.DEV === 'yes';
 // host 与 port
-const PROTOCOL = isDev ? 'http:' : 'https:';
-const HOST = isDev ? '127.0.0.1' : 'github.leeenx.cn';
 const PORT = isDev ? 9000 : undefined;
 const PATH = '/dist/';
 
