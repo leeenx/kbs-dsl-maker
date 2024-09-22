@@ -10,8 +10,7 @@
 
 ## 不支持的功能
 
-1. 不要尝试加载 css，因为是面向小程序的页面。微信小程序目前不支持加载外部的 css，只在使用小程序包内的样式，或者是使用内联样式。
-2. LabeledStatement 不支持。没有支持的必要，如果遇到 LabeledStatement 需要开发自行解决
+不要尝试加载 css，因为是面向小程序的页面。微信小程序目前不支持加载外部的 css，只在使用小程序包内的样式，或者是使用内联样式。
 
 
 ## 页面自带的勾子
@@ -42,10 +41,11 @@
 ## 内置方法
 
 内置方法基本覆盖小程序 wxs 运行环境，例如以下四个：
-- Page
-- App
-- getApp
-- getCurrentPages
+- Page 即微信小程序环境的 Page
+- App 即微信小程序环境的 App
+- getApp 等同于 wx.getApp
+- getCurrentPages 等同于 wx.getCurrentPages
+- getThisPointer 获取当前页面的 this 指针
 
 获取当前的 `this` 指针：`getThisPointer`，实际上是返回当前页面组件的 `this` 指针。因为 web 分包上的所谓组件并不是小程序组件，在调用某些需要当前组件指针的 api 时，可以调用此方法获取
 
@@ -54,6 +54,7 @@
 默认自带的内置对象如下：
 - _: lodash对象
 - wx: 即微信小程序的全局对象 wx
+- runingEnv: 运行环境，web 表示 H5，小程序为 wx_mp
 
 内置对象或内置方法，都可以通过 `kbs-dsl-resolver` 提供的 `registerToGlobleScope` 方法，把内置方法或对象注册到运行环境中。
 
