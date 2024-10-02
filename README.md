@@ -43,9 +43,12 @@
 内置方法基本覆盖小程序 wxs 运行环境，例如以下四个：
 - Page 即微信小程序环境的 Page
 - App 即微信小程序环境的 App
-- getApp 等同于 wx.getApp
-- getCurrentPages 等同于 wx.getCurrentPages
-- getThisPointer 获取当前页面的 this 指针
+- getApp() 等同于 wx.getApp
+- getCurrentPages() 等同于 wx.getCurrentPages
+- getThisPointer() 获取当前页面的 this 指针
+- getCurrentPage() 获取当前页面（即被调用代码所在的页面）
+- getCurrentParams() 获取当前页面的所有的「页面参数」
+- getCurrentParam(key: string) 获取指定key的页面参数
 
 获取当前的 `this` 指针：`getThisPointer`，实际上是返回当前页面组件的 `this` 指针。因为 web 分包上的所谓组件并不是小程序组件，在调用某些需要当前组件指针的 api 时，可以调用此方法获取
 

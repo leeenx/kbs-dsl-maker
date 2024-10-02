@@ -113,8 +113,10 @@ const ignoreFNames = [
 
 const isDev = process.env.DEV === 'yes';
 // host 与 port
+const PROTOCOL = isDev ? 'http:' : 'https:';
+const HOST = isDev ? '127.0.0.1' : 'www.leeenx.cn';
 const PORT = isDev ? 9000 : undefined;
-const PATH = '/dist/';
+const PATH = 'dist';
 
 const KbsDslParserPlugin = require('kbs-dsl-parser');
 
@@ -184,8 +186,7 @@ module.exports = {
       arrowFunction: false,
       const: false
     },
-    publicPath: isDev ? '/' : PATH
-    // publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}/`
+    publicPath: PORT ? `${PROTOCOL}//${HOST}:${PORT}/` : `${PROTOCOL}//${HOST}/${PATH}/`
   },
   optimization: {
     minimize: process.env.COMPRESS === 'yes',

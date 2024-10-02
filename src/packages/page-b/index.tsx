@@ -48,7 +48,7 @@ export default memo(() => {
     console.log('page-b隐藏');
   });
   useShareAppMessage(({ from }) => {
-    console.log('----from:', from);
+    console.log('pageb----from:', from);
     return {
       title: '分享的页面是 PAGE-B'
     }

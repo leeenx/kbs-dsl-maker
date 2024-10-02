@@ -1,6 +1,7 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { useMemoizedFn } from "ahooks";
 import { Button } from "../../base-components";
+import { useShareAppMessage } from "../../utils";
 
 import Bar from './bar';
 import Scatter from "./scatter";
@@ -130,16 +131,29 @@ export default memo(() => {
     { title: '加载图片', name: 'loadImage' },
   ], []);
 
-  const handleItemClick = useMemoizedFn((name: string) => {
-    navigate('/echarts-demo/', { page: name });
+  const handleItemClick = useMemoizedFn((name: string, title: string) => {
+    navigate('/echarts-demo/', { page: name, pageTitle: title });
   });
+
+  useShareAppMessage(() => {
+    console.log('------- echarts demo 首页');
+    return {
+      title: 'echarts demo 首页'
+    };
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('----- getCurrentPage', getCurrentPage());
+    }, 5000);
+  }, []);
 
   return (
     <div className="pannel">
       <div style={css.grid} className="grid">
         {
           baseChartList.map((item, index) => (
-            <div style={css.item(index)} key={`${index}`} onClick={() => handleItemClick(item.name)}>
+            <div style={css.item(index)} key={`${index}`} onClick={() => handleItemClick(item.name, item.title)}>
               <div style={css.poster}>
                 <img src={item.icon} style={css.image} />
               </div>
@@ -155,7 +169,7 @@ export default memo(() => {
               key={`${index}`}
               className="button"
               style={css.button}
-              onClick={() => handleItemClick(item.name)}>
+              onClick={() => handleItemClick(item.name, item.title)}>
               {item.title}
             </Button>
           ))

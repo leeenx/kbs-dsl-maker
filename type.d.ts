@@ -1,7 +1,10 @@
 declare function navigate(route: string, params?: any, config?: { headless?: boolean; replace?: boolean; }): Promise<void>;
+declare const currentPage: WechatMiniprogram.Page.Instance<WechatMiniprogram.IAnyObject, WechatMiniprogram.IAnyObject>;
 declare function getCurrentPage(): WechatMiniprogram.Page.Instance<WechatMiniprogram.IAnyObject, WechatMiniprogram.IAnyObject>;
 declare function getParams(): Record<string, string | undefined>;
 declare function getParam(key: string): string | undefined;
+declare function getCurrentParams(): Record<string, string | undefined>;
+declare function getCurrentParam(key: string): string | undefined;
 declare function getDslUrl(route: string): string;
 declare function createWxMpRoute(route: string, params: any, headless: boolean): string;
 
